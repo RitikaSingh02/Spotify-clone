@@ -1,16 +1,21 @@
-const { createContext, useContext, useReducer } = require("react")
+// const { createContext, useContext, useReducer } = require("react")
 
-import React
+import React,
 {
     createContext,
+    // eslint-disable-next-line 
     useContext,
     useReducer
 }
 from "react";
 
-export const datalayercontext=createContext();
+export const DataLayerContext=createContext();
 
-export const datalayer =({
-    initialstate,reducerer,children})=>{
-        //1:47:36
-    }
+export const DataLayer =({
+    initialstate,reducer,children})=>(
+        <DataLayerContext.Provider value={useReducer(reducer)}>
+            {children}
+        </DataLayerContext.Provider>
+    )
+export default DataLayer;
+export const useDataLayervalue=()=>useContext( DataLayerContext)

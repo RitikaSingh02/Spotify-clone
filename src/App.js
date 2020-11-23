@@ -5,11 +5,15 @@ import Login from "./Login.js";
 import Player from "./Player.js"
 import { get_token_from_response } from "./Spotify";
 import SpotifyWebApi from "spotify-web-api-js"
+// eslint-disable-next-line 
+import { useDataLayervalue } from "./DataLayer";
+
 
 const spotify=new SpotifyWebApi();
 
 function App() {
   const [token,setToken]=useState(null);
+  const [{ user },dispatch]= useDataLayervalue();//dispatch helps us to deal with the data in the datalayer
   
   //to run code based on a specific condition;whenever a particular param changes
   //then only the useEffect func is triggered
@@ -25,6 +29,10 @@ function App() {
       // console.log(_token);
       spotify.setAccessToken(_token);
       spotify.getMe().then(user=>{
+        dispatch({
+          type:"SET_USER",
+          user:user,
+        });
         console.log("show me the user",user);
           // show me the user 
           // Object
@@ -38,6 +46,8 @@ function App() {
           // uri: "spotify:user:7ev8pdddth00w6p1pf7etb9ui"
           // __proto__: Object
       })
+
+
     }
     console.log("this is the token rendered",hash)
   },[])
